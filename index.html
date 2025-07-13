@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>خريطة كلية المجتمع - سنحان</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+
+    #map {
+      height: 100vh;
+      width: 100%;
+    }
+
+    /*.custom-label {
+      color: #222;
+      font-weight: bold;
+      background-color: white;
+      border: 1px solid #999;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-align: center;
+      white-space: nowrap;
+    }
+*/
+    /* القائمة السفلية */
+    .bottom-sheet {
+      position: fixed;
+      bottom: -100%;
+      left: 0;
+      right: 0;
+      background: #fefefe;
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+      padding: 20px;
+      transition: bottom 0.4s ease;
+      z-index: 999;
+      max-height: 60%;
+      overflow-y: auto;
+      direction: rtl;
+      font-family: Arial, sans-serif;
+    }
+
+    .bottom-sheet.active {
+      bottom: 0;
+    }
+
+    .bottom-sheet h3 {
+      margin-top: 0;
+    }
+
+    .bottom-sheet img {
+      width: 100%;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .close-btn {
+      position: absolute;
+      left: 20px;
+      top: 15px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<!-- القائمة السفلية -->
+<div class="bottom-sheet" id="collegeSheet">
+  <div class="close-btn" onclick="closeSheet()">×</div>
+  <h3>كلية المجتمع - سنحان</h3>
+  <p>تقع الكلية في قرية توالب، مديرية بلاد الروس، جنوب العاصمة صنعاء. تقدم برامج دبلوم متنوعة لخدمة المجتمع المحلي.</p>
+  <p><strong>رقم التواصل:</strong> 772235557</p>
+  <p><strong>البريد الإلكتروني:</strong> example@college.edu.ye</p>
+  <img src="1.jpg" alt="صورة الكلية">
+</div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+  var lat = 15.183456;
+  var lng = 44.319012;
+  var map = L.map( 'map' ).setView([lat, lng], 7);
+
+  L.tileLayer( 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' , {
+    attribution:  '&copy; OpenStreetMap contributors '
+  }).addTo(map);
+
+  // علامة عادية
+  var mainMarker = L.marker([lat, lng]).addTo(map);
+  mainMarker.on( 'click' , function() {
+    document.getElementById( 'collegeSheet' ).classList.add( 'active' );
+  });
+
+  L.marker([lat, lng], { icon: labelIcon }).addTo(map);
+
+  function closeSheet() {
+    document.getElementById( 'collegeSheet' ).classList.remove( 'active' );
+  }
+</script>
+</body>
+</html>
